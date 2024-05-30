@@ -1,8 +1,8 @@
-import React, { useRef, useState, useEffect } from "react";
-import ClipLoader from "react-spinners/ClipLoader";
 import { Copy, RotateCw } from "lucide-react";
+import React, { useEffect, useRef, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import { set } from "react-hook-form";
+import Markdown from "react-markdown";
+import ClipLoader from "react-spinners/ClipLoader";
 
 interface Prop {
   isLoading: boolean;
@@ -57,7 +57,15 @@ const Result: React.FC<Prop> = ({ isLoading, response }) => {
           </div>
         ) : (
           <div className="p-2" ref={responseRef}>
-            {data ? data : <p>No response available</p>}
+            {data ? (
+              <section className="prose">
+                <Markdown>{data}</Markdown>
+              </section>
+            ) : (
+              <p className="flex items-center justify-center my-20 h-full">
+                No Response Available
+              </p>
+            )}
           </div>
         )}
       </div>
