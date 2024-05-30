@@ -1,5 +1,5 @@
-import Image from "next/image";
+import Post from "@/components/post/Post";
 
 export default function Home() {
-  return <h1>Hello World</h1>;
+  return <Post />;
 }
