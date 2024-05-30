@@ -124,7 +124,7 @@ const Post = () => {
             />
             <Button
               type="submit"
-              className="w-full md:w-1/2 h-12 text-lg"
+              className="w-full md:w-1/2 h-12 text-lg bg-[#e55c43] hover:bg-[#ff7f66]"
               disabled={isLoading}
             >
               Generate

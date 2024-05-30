@@ -1,11 +1,9 @@
-import Header from "@/components/header/Header";
-import Post from "@/components/post/Post";
+import Hero from "@/components/herosection/Hero";
 
 export default function Home() {
   return (
-    <div>
-      <Header />
-      <Post />
+    <div className="relative">
+      <Hero />
     </div>
   );
 }

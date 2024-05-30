@@ -56,7 +56,7 @@ const Result: React.FC<Prop> = ({ isLoading, response }) => {
 
   return (
     <>
-      <div className="border w-full mt-4 h-72 p-4 overflow-y-auto relative">
+      <div className="border w-full mt-4 h-72 p-4 overflow-y-auto relative bg-white rounded-md">
         {isLoading ? (
           <div className="flex items-center justify-center h-full">
             <ClipLoader color="#333" />
@@ -64,7 +64,7 @@ const Result: React.FC<Prop> = ({ isLoading, response }) => {
         ) : (
           <div className="p-2" ref={responseRef}>
             {data ? (
-              <section className="prose">
+              <section className="prose  max-w-none">
                 <Markdown>{data}</Markdown>
               </section>
             ) : (
