@@ -1,5 +1,11 @@
+import Header from "@/components/header/Header";
 import Post from "@/components/post/Post";
 
 export default function Home() {
-  return <Post />;
+  return (
+    <div>
+      <Header />
+      <Post />
+    </div>
+  );
 }
