@@ -1,9 +1,9 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -13,16 +13,15 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
 
 const FormSchema = z.object({
   prompts: z.string().min(5, {
@@ -43,9 +42,26 @@ const Post = () => {
   });
 
   const [voiceTone, setVoiceTone] = useState("");
+  const [response, setResponse] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  function onSubmit(data: any) {
-    console.log(data);
+  async function onSubmit(data: any) {
+    setIsLoading(true);
+    try {
+      const response = await fetch("/api/generator", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const result = await response.json();
+      setResponse(result);
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -102,12 +118,24 @@ const Post = () => {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full md:w-1/2 h-12 text-lg">
+            <Button
+              type="submit"
+              className="w-full md:w-1/2 h-12 text-lg"
+              disabled={isLoading}
+            >
               Submit
             </Button>
           </div>
         </form>
       </Form>
+
+      <div className="border w-full mt-4 h-72">
+        {isLoading ? (
+          <div className="text-lg">Loading...</div>
+        ) : (
+          <div>{response}</div>
+        )}
+      </div>
     </div>
   );
 };
