@@ -1,6 +1,8 @@
 "use client";
 
+import { useToast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -22,6 +24,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import Result from "./Result";
 
 const FormSchema = z.object({
   prompts: z.string().min(5, {
@@ -48,15 +51,17 @@ const Post = () => {
   async function onSubmit(data: any) {
     setIsLoading(true);
     try {
-      const response = await fetch("/api/generator", {
-        method: "POST",
-        body: JSON.stringify(data),
+      const res = await axios.post("/api/generator", data, {
         headers: {
           "Content-Type": "application/json",
         },
       });
-      const result = await response.json();
-      setResponse(result);
+
+      setResponse(res.data);
+      form.reset({
+        prompts: "",
+        voiceTone: "",
+      });
     } catch (error) {
       console.error("Error:", error);
     } finally {
@@ -95,7 +100,7 @@ const Post = () => {
                       value={voiceTone}
                     >
                       <SelectTrigger className="w-full h-12 text-lg">
-                        <SelectValue placeholder="Voice Tone" />
+                        <SelectValue placeholder="Select Tone" />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectGroup>
@@ -123,19 +128,13 @@ const Post = () => {
               className="w-full md:w-1/2 h-12 text-lg"
               disabled={isLoading}
             >
-              Submit
+              Generate
             </Button>
           </div>
         </form>
       </Form>
 
-      <div className="border w-full mt-4 h-72">
-        {isLoading ? (
-          <div className="text-lg">Loading...</div>
-        ) : (
-          <div>{response}</div>
-        )}
-      </div>
+      <Result isLoading={isLoading} response={response} />
     </div>
   );
 };
