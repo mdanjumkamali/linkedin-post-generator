@@ -1,4 +1,5 @@
 import OpenAI from "openai";
+import { postGeneratorTemplate } from "./prompts";
 
 export default class OpenAIServices {
   public llm: OpenAI;
@@ -8,7 +9,7 @@ export default class OpenAIServices {
     });
   }
 
-  async generatePost(prompt: string, voiceTone: string) {
+  async generatePost(topic: string, tone: string) {
     const response = await this.llm.chat.completions.create({
       model: "gpt-3.5-turbo",
       temperature: 0.5,
@@ -16,15 +17,14 @@ export default class OpenAIServices {
       messages: [
         {
           role: "system",
-          content: `You are a expert linkedin Content creator. you have to create content based on voice tone ${voiceTone}`,
+          content: postGeneratorTemplate({ topic, tone }),
         },
         {
           role: "user",
-          content: prompt,
+          content: topic,
         },
       ],
     });
-    console.log(response.choices[0].message.content);
     return response.choices[0].message.content;
   }
 }

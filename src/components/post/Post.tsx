@@ -48,6 +48,7 @@ const Post = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   async function onSubmit(data: any) {
+    console.log(data);
     setIsLoading(true);
     try {
       const res = await axios.post("/api/generator", data, {
@@ -61,6 +62,7 @@ const Post = () => {
         prompts: "",
         voiceTone: "",
       });
+      setVoiceTone("");
     } catch (error) {
       console.error("Error:", error);
     } finally {
@@ -78,7 +80,7 @@ const Post = () => {
             render={({ field }) => (
               <FormItem>
                 <FormControl className="h-16 text-lg">
-                  <Input placeholder="LinkedIn Post Generator" {...field} />
+                  <Input placeholder="Enter Post Topic..." {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -103,16 +105,17 @@ const Post = () => {
                       </SelectTrigger>
                       <SelectContent>
                         <SelectGroup>
-                          <SelectItem value="casual">Casual</SelectItem>
-                          <SelectItem value="storytelling">
-                            Storytelling
+                          <SelectItem value="casual" className="text-lg">
+                            😊 Casual
                           </SelectItem>
-                          <SelectItem value="creative">Creative</SelectItem>
-                          <SelectItem value="inspirational">
-                            Inspirational
+                          <SelectItem value="professional" className="text-lg">
+                            👔 Professional
                           </SelectItem>
-                          <SelectItem value="professional">
-                            Professional
+                          <SelectItem value="inspirational" className="text-lg">
+                            🌟 Inspirational
+                          </SelectItem>
+                          <SelectItem value="storytelling" className="text-lg">
+                            📖 Storytelling
                           </SelectItem>
                         </SelectGroup>
                       </SelectContent>

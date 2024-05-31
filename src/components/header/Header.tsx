@@ -8,7 +8,7 @@ const Header = () => {
           <span className="text-[#e55c43]">LinkedIn</span> Post Generator
         </h1>
         <p className="text-lg md:text-xl text-center">
-          Boost your LinkedIn presence with our Post Generator
+          🚀 Boost your LinkedIn presence with our Post Generator
         </p>
       </div>
     </div>
