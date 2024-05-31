@@ -48,7 +48,6 @@ const Post = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   async function onSubmit(data: any) {
-    console.log(data);
     setIsLoading(true);
     try {
       const res = await axios.post("/api/generator", data, {
@@ -71,7 +70,7 @@ const Post = () => {
   }
 
   return (
-    <div className="max-w-screen-lg mx-auto flex flex-col items-center mt-10 p-4">
+    <div className="max-w-screen-lg mx-auto flex flex-col items-center md:mt-10 p-4">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
           <FormField
@@ -86,7 +85,7 @@ const Post = () => {
               </FormItem>
             )}
           />
-          <div className="flex flex-col md:flex-row gap-4 mt-6">
+          <div className="flex flex-col md:flex-row  gap-4 mt-6">
             <FormField
               control={form.control}
               name="voiceTone"

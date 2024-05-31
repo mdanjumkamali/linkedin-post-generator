@@ -25,14 +25,6 @@ const Result: React.FC<Prop> = ({ isLoading, response }) => {
 
   const handleCopy = () => {
     if (responseRef.current) {
-      const range = document.createRange();
-      range.selectNodeContents(responseRef.current);
-      const selection = window.getSelection();
-      if (selection) {
-        selection.removeAllRanges();
-        selection.addRange(range);
-      }
-
       navigator.clipboard
         .writeText(response)
         .then(() => {
@@ -41,12 +33,6 @@ const Result: React.FC<Prop> = ({ isLoading, response }) => {
         .catch((err) => {
           toast.error(`Failed to copy: ${err}`);
         });
-
-      setTimeout(() => {
-        if (selection) {
-          selection.removeAllRanges();
-        }
-      }, 2000);
     }
   };
 
